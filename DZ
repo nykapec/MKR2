@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+
+
+namespace KR2
+
+{
+    struct ELECTRONIC_DEVICE     // Перша структупа             
+    { 
+        public string Interface;
+        public string Power_consumption;
+        public string Power;
+        public int Weight;
+    }
+                                         struct INFORMATION_DISPLAY_DEVICE // Друга структура
+                                         {
+                                              public ELECTRONIC_DEVICE Diagonal;
+                                              public string Resolution;
+                                              public int Price;
+                                         }
+
+    struct ADVERTISING // Структура 'Реклама'
+    {
+        public List<INFORMATION_DISPLAY_DEVICE> Devices;
+
+        public void DevicePrices(int grivnas)
+        {
+
+            foreach (var device in Devices)
+            {
+                if (device.Price <= grivnas)   
+                {
+                    Console.WriteLine                                                                   // Виводимо інформацію на екран
+                        ($"Interface: {device.Diagonal.Interface}" +                                    // Виводимо на екран " Interface "
+                         $"\nPower_consumption: {device.Diagonal.Power_consumption} " +                 // Виводимо на екран " Power_consumption "
+                         $"\nPower: {device.Diagonal.Power}\nWeight: {device.Diagonal.Weight}" +        // Виводимо на екран " Power "
+                         $"\nResolution: {device.Resolution}" +                                         // Виводимо на екран " Resolution "
+                         $"\nPrice: {device.Price}\n");                                                 // Виводимо на екран " Price "
+                }
+            }
+        }
+    }
+
+    class Device1 // Клас
+    {
+        static void Main(string[] args)
+        {
+            ADVERTISING advertising = new ADVERTISING()
+            {
+                Devices = new List<INFORMATION_DISPLAY_DEVICE>
+                {
+                    new INFORMATION_DISPLAY_DEVICE()                
+                    {
+                        Resolution = "1920 x 1080",
+                        Price = 100,
+                        Diagonal = new ELECTRONIC_DEVICE()
+                        {
+                            Interface = "Iphone 7",
+                            Power_consumption = "210",
+                            Power = "2100",
+                            Weight = 210
+                        }
+                    },
+
+                                   new INFORMATION_DISPLAY_DEVICE()    // Ціна більша за введену "DevicePrices(199)" => не виводить інформацію на екран "device.Price <= grivnas"
+                                   {
+                                      Resolution = "720 x 480",
+                                      Price = 200,
+                                      Diagonal = new ELECTRONIC_DEVICE()
+                                      {
+                                          Interface = "Iphone 4",
+                                          Power_consumption = "250 ",
+                                          Power = "2130 ",
+                                          Weight = 230
+                                      }
+                                   },
+                                                    new INFORMATION_DISPLAY_DEVICE()    // Ціна більша за введену "DevicePrices(199)" => не виводить інформацію на екран "device.Price <= grivnas"
+                                                    {
+                                                       Resolution = "1440 x 900",
+                                                       Price = 300,
+                                                       Diagonal = new ELECTRONIC_DEVICE()
+                                                       {
+                                                           Interface = "Iphone 9",
+                                                           Power_consumption = "15",
+                                                           Power = "2300",
+                                                           Weight = 220
+                                                       }
+                                                    },
+                }
+            };
+            advertising.DevicePrices(199);  // Максимальна ціна
+            Console.ReadLine();
+        }
+    }
+
+}
